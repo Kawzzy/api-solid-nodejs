@@ -11,7 +11,24 @@ datasource db {
 }
 
 model User {
-  id    String @id @default(uuid())
-  name  String
-  email String @unique
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+model CheckIn {
+  id          String    @id @default(uuid())
+  createdAt   DateTime  @default(now())
+  validatedAt DateTime?
+}
+
+model Gym {
+  id          String  @id @default(uuid())
+  name        String
+  description String?
+  phone       String?
+  latitude    Decimal
+  longitude   Decimal
 }
