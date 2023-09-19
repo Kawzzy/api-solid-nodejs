@@ -1,7 +1,7 @@
 import { userSchema } from '@/utils/user/userUtils'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { UserService } from '@/services/user/userService'
-import { PrismaUserRepository } from '@/repositories/user/prisma-user-repository'
+import { PrismaUserRepository } from '@/repositories/user/prisma/prismaUserRepository'
 
 export async function userController(req: FastifyRequest, res: FastifyReply) {
 	const { name, email, password } = userSchema.parse(req.body)
