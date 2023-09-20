@@ -1,25 +1,29 @@
 import { compare } from 'bcryptjs'
 import { UserService } from './userService'
 import { describe, expect, it } from 'vitest'
+import { InMemoryUserRepository } from '@/repositories/user/inMemory/inMemoryUserRepository'
+import { UserAlreadyExistsError } from './errors/userAlreadyExistsError'
 
 describe('Services', () => {
 	describe('User service', () => {
-		it('should hash the users password on registration', async () => {
-			const userService = new UserService({
-				async findByEmail(email) {
-					null
-				},
+		it('should complete registration successfully', async () => {
+			const inMemoryUserRepository = new InMemoryUserRepository()
+			const userService = new UserService(inMemoryUserRepository)
 
-				async create(data) {
-					return {
-						id: '1',
-						name: data.name,
-						email: data.email,
-						passwordHash: data.passwordHash,
-						createdAt: new Date()
-					}
-				},
+			const password = '123456'
+
+			const { user } = await userService.createUser({
+				name: 'John Doe',
+				email: 'johndoe@test.com',
+				password
 			})
+
+			expect(user.id).toEqual(expect.any(String))
+		})
+
+		it('should hash the users password on registration', async () => {
+			const inMemoryUserRepository = new InMemoryUserRepository()
+			const userService = new UserService(inMemoryUserRepository)
 
 			const password = '123456'
 
@@ -32,6 +36,28 @@ describe('Services', () => {
 			const isSameHash = await compare(password, user.passwordHash)
 
 			expect(isSameHash).toBe(true)
+		})
+		
+		it('should not be possible to register with same email twice', async () => {
+			const inMemoryUserRepository = new InMemoryUserRepository()
+			const userService = new UserService(inMemoryUserRepository)
+
+			const email = 'johndoe@test.com'
+			const password = '123456'
+
+			await userService.createUser({
+				name: 'John Doe',
+				email,
+				password
+			})
+
+			expect(() =>
+				userService.createUser({
+					name: 'John Doe',
+					email,
+					password
+				})
+			).rejects.toBeInstanceOf(UserAlreadyExistsError)
 		})
 	})
 })
