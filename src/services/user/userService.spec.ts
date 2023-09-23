@@ -1,8 +1,8 @@
 import { compare } from 'bcryptjs'
 import { UserService } from './userService'
 import { describe, expect, it } from 'vitest'
-import { InMemoryUserRepository } from '@/repositories/user/inMemory/inMemoryUserRepository'
 import { UserAlreadyExistsError } from './errors/userAlreadyExistsError'
+import { InMemoryUserRepository } from '@/repositories/user/inMemory/inMemoryUserRepository'
 
 describe('Services', () => {
 	describe('User service', () => {
