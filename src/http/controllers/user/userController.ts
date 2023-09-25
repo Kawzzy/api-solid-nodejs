@@ -1,15 +1,14 @@
 import { userSchema } from '@/utils/user/userUtils'
 import { FastifyReply, FastifyRequest } from 'fastify'
-import { UserService } from '@/services/user/userService'
-import { PrismaUserRepository } from '@/repositories/user/prisma/prismaUserRepository'
+import { UserServiceFactory } from '@/services/user/factories/userServiceFactory'
 import { UserAlreadyExistsError } from '@/services/user/errors/userAlreadyExistsError'
 
 export async function userController(req: FastifyRequest, res: FastifyReply) {
 	const { name, email, password } = userSchema.parse(req.body)
 
 	try {
-		const prismaUserRepository = new PrismaUserRepository()
-		const userService = new UserService(prismaUserRepository)
+
+		const userService = UserServiceFactory()
 		
 		await userService.createUser({
 			name,
