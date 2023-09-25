@@ -1,16 +1,21 @@
 import { hash } from 'bcryptjs'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { AuthenticationService } from './authenticationService'
 import { InvalidCredentialsError } from '../errors/invalidCredentialsError'
 import { InMemoryUserRepository } from '@/repositories/user/inMemory/inMemoryUserRepository'
 
+let inMemoryUserRepository: InMemoryUserRepository
+let authenticationService: AuthenticationService
+
 describe('Services', () => {
 	describe('Authentication service', () => {
 
-		it('should authenticate successfully', async () => {
+		beforeEach(() => {
+			inMemoryUserRepository = new InMemoryUserRepository()
+			authenticationService = new AuthenticationService(inMemoryUserRepository)
+		})
 
-			const inMemoryUserRepository = new InMemoryUserRepository()
-			const authenticationService = new AuthenticationService(inMemoryUserRepository)
+		it('should authenticate successfully', async () => {
 
 			const password = '123456'
 
@@ -26,9 +31,6 @@ describe('Services', () => {
 		})
 		
 		it('should not authenticate with unregistered email', async () => {
-
-			const inMemoryUserRepository = new InMemoryUserRepository()
-			const authenticationService = new AuthenticationService(inMemoryUserRepository)
       
 			expect(() =>
 				authenticationService.execute({ email: 'johndoe@test.com', password: '123456' })
@@ -36,9 +38,6 @@ describe('Services', () => {
 		})
 		
 		it('should not authenticate with unregistered password', async () => {
-
-			const inMemoryUserRepository = new InMemoryUserRepository()
-			const authenticationService = new AuthenticationService(inMemoryUserRepository)
       
 			await inMemoryUserRepository.create({
 				name: 'John Doe',
