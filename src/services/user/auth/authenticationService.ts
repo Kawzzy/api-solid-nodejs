@@ -1,4 +1,4 @@
-import { compare, hash } from 'bcryptjs'
+import { compare } from 'bcryptjs'
 import { User } from '@prisma/client'
 import { IUserRepository } from '@/repositories/user/userRepository'
 import { InvalidCredentialsError } from '../errors/invalidCredentialsError'
