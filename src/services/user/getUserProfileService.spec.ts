@@ -32,7 +32,7 @@ describe('Services', () => {
 		
 		it('should not return users profile with wrong id', async () => {
       
-			expect(() =>
+			await expect(() =>
 				getUserProfileService.execute({ userId: 'n0n3X1stentID' })
 			).rejects.toBeInstanceOf(ResourceNotFoundError)
 		})

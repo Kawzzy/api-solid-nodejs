@@ -32,7 +32,7 @@ describe('Services', () => {
 		
 		it('should not authenticate with unregistered email', async () => {
       
-			expect(() =>
+			await expect(() =>
 				authenticationService.execute({ email: 'johndoe@test.com', password: '123456' })
 			).rejects.toBeInstanceOf(InvalidCredentialsError)
 		})
@@ -45,7 +45,7 @@ describe('Services', () => {
 				passwordHash: await hash('123456', 6)
 			})
 
-			expect(() =>
+			await expect(() =>
 				authenticationService.execute({ email: 'johndoe@test.com', password: '123123' })
 			).rejects.toBeInstanceOf(InvalidCredentialsError)
 		})
