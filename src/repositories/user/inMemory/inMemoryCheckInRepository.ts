@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto'
 import { CheckIn, Prisma } from '@prisma/client'
-import { CheckInRepository } from '../prisma/checkInRepository'
+import { CheckInRepository } from '../checkInRepository'
 
 export class InMemoryCheckInRepository implements CheckInRepository {
 
@@ -18,5 +18,15 @@ export class InMemoryCheckInRepository implements CheckInRepository {
 		this.checkIns.push(checkIn)
     
 		return checkIn
+	}
+
+	findUserByIdOnDate(userId: string, date: Date) {
+		const checkInOnSameDate = this.checkIns.find(checkIn => checkIn.userId === userId)
+
+		if (!checkInOnSameDate) {
+			return null
+		}
+
+		return checkInOnSameDate
 	}
 }
