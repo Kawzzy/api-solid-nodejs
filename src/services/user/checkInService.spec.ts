@@ -1,8 +1,11 @@
 import { CheckInService } from './checkInService'
+import { Decimal } from '@prisma/client/runtime/library'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { InMemoryGymRepository } from '@/repositories/gym/inMemory/inMemoryGymRepository'
 import { InMemoryCheckInRepository } from '@/repositories/user/inMemory/inMemoryCheckInRepository'
 
 let inMemoryCheckInRepository: InMemoryCheckInRepository
+let inMemoryGymRepository: InMemoryGymRepository
 let checkInService: CheckInService
 
 describe('Services', () => {
@@ -10,7 +13,17 @@ describe('Services', () => {
 
 		beforeEach(() => {
 			inMemoryCheckInRepository = new InMemoryCheckInRepository()
-			checkInService = new CheckInService(inMemoryCheckInRepository)
+			inMemoryGymRepository = new InMemoryGymRepository()
+			checkInService = new CheckInService(inMemoryCheckInRepository, inMemoryGymRepository)
+
+			inMemoryGymRepository.gyms.push({
+				id: 'gym-01',
+				name: 'Gymgobel',
+				description: '',
+				phone: '',
+				latitude: new Decimal(0),
+				longitude: new Decimal(0)
+			})
 
 			vi.useFakeTimers()
 		})
@@ -23,7 +36,9 @@ describe('Services', () => {
 
 			const { checkIn } = await checkInService.execute({
 				userId: 'user-01',
-				gymId: 'gym-01'
+				gymId: 'gym-01',
+				userLatitude: 0,
+				userLongitude: 0
 			})
 
 
@@ -35,13 +50,17 @@ describe('Services', () => {
 
 			await checkInService.execute({
 				userId: 'user-01',
-				gymId: 'gym-01'
+				gymId: 'gym-01',
+				userLatitude: 0,
+				userLongitude: 0
 			})
 
 			await expect(() =>
 				checkInService.execute({
 					userId: 'user-01',
-					gymId: 'gym-01'
+					gymId: 'gym-01',
+					userLatitude: 0,
+					userLongitude: 0
 				})
 			).rejects.toBeInstanceOf(Error)
 		})
@@ -51,14 +70,18 @@ describe('Services', () => {
       
 			await checkInService.execute({
 				userId: 'user-01',
-				gymId: 'gym-01'
+				gymId: 'gym-01',
+				userLatitude: 0,
+				userLongitude: 0
 			})
 
 			vi.setSystemTime(new Date(2023, 8, 26, 10, 0, 0))
 
 			const { checkIn } = await checkInService.execute({
 				userId: 'user-01',
-				gymId: 'gym-01'
+				gymId: 'gym-01',
+				userLatitude: 0,
+				userLongitude: 0
 			})
 
 			expect(checkIn.id).toEqual(expect.any(String))

@@ -1,9 +1,13 @@
 import { CheckIn } from '@prisma/client'
-import { CheckInRepository } from '@/repositories/user/checkInRepository'
+import { IGymRepository } from '@/repositories/gym/gymRepository'
+import { ResourceNotFoundError } from './errors/resourceNotFoundError'
+import { ICheckInRepository } from '@/repositories/user/checkInRepository'
 
 interface ICheckInRequest {
   userId: string,
-  gymId: string
+  gymId: string,
+	userLatitude: number,
+	userLongitude: number
 }
 
 interface ICheckInResponse {
@@ -12,9 +16,20 @@ interface ICheckInResponse {
 
 export class CheckInService {
 
-	constructor(private checkInRepository: CheckInRepository) {}
+	constructor(
+		private checkInRepository: ICheckInRepository,
+		private gymRepository: IGymRepository
+	) {}
 
 	async execute({ userId, gymId } : ICheckInRequest) : Promise<ICheckInResponse> {
+		const gym = await this.gymRepository.findById(gymId)
+
+		if (!gym) {
+			throw new ResourceNotFoundError()
+		}
+
+		// calculate the distance
+		
 		const checkInOnSameDay = await this.checkInRepository.findUserByIdOnDate(userId, new Date())
 		
 		if (checkInOnSameDay) {

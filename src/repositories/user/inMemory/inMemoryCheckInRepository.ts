@@ -2,9 +2,9 @@ import dayjs from 'dayjs'
 
 import { randomUUID } from 'node:crypto'
 import { CheckIn, Prisma } from '@prisma/client'
-import { CheckInRepository } from '../checkInRepository'
+import { ICheckInRepository } from '../checkInRepository'
 
-export class InMemoryCheckInRepository implements CheckInRepository {
+export class InMemoryCheckInRepository implements ICheckInRepository {
 
 	public checkIns: CheckIn[] = []
 
@@ -22,7 +22,7 @@ export class InMemoryCheckInRepository implements CheckInRepository {
 		return checkIn
 	}
 
-	findUserByIdOnDate(userId: string, date: Date) {
+	async findUserByIdOnDate(userId: string, date: Date) {
 		const startOfTheDay = dayjs(date).startOf('date')
 		const endOfTheDay = dayjs(date).endOf('date')
 
