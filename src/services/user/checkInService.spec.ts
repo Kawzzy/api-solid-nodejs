@@ -86,5 +86,26 @@ describe('Services', () => {
 
 			expect(checkIn.id).toEqual(expect.any(String))
 		})
+		
+		it('should not check in on distant gym', async () => {
+
+			inMemoryGymRepository.gyms.push({
+				id: 'gym-02',
+				name: 'Gymgobel-filial',
+				description: '',
+				phone: '',
+				latitude: new Decimal(500),
+				longitude: new Decimal(640)
+			})
+
+			await expect(() => 
+				checkInService.execute({
+					userId: 'user-01',
+					gymId: 'gym-02',
+					userLatitude: 0,
+					userLongitude: 0
+				})
+			).rejects.toBeInstanceOf(Error)
+		})
 	})
 })
