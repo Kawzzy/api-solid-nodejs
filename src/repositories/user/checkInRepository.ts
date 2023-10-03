@@ -6,5 +6,5 @@ export interface ICheckInRepository {
 
   findUserByIdOnDate(userId: string, date: Date): Promise<CheckIn | null>
 
-  findManyByUserId(userId: string): Promise<CheckIn[]>
+  findManyByUserId(userId: string, page: number): Promise<CheckIn[]>
 }

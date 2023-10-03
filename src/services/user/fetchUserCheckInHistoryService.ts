@@ -2,7 +2,8 @@ import { CheckIn } from '@prisma/client'
 import { ICheckInRepository } from '@/repositories/user/checkInRepository'
 
 interface IFetchUserCheckInHistoryRequest {
-  userId: string
+  userId: string,
+	page: number
 }
 
 interface IFetchUserCheckInHistoryResponse {
@@ -15,8 +16,8 @@ export class FetchUserCheckInHistoryService {
 		private checkInRepository: ICheckInRepository,
 	) {}
 
-	async execute({ userId } : IFetchUserCheckInHistoryRequest) : Promise<IFetchUserCheckInHistoryResponse> {
-		const checkIns = await this.checkInRepository.findManyByUserId(userId)
+	async execute({ userId, page } : IFetchUserCheckInHistoryRequest) : Promise<IFetchUserCheckInHistoryResponse> {
+		const checkIns = await this.checkInRepository.findManyByUserId(userId, page)
 
 		return { checkIns }
 	}
