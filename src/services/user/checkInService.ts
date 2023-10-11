@@ -42,7 +42,7 @@ export class CheckInService {
 			throw new MaxDistanceError()
 		}
 
-		const checkInOnSameDay = await this.checkInRepository.findUserByIdOnDate(userId, new Date())
+		const checkInOnSameDay = await this.checkInRepository.findByUserIdOnDate(userId, new Date())
 		
 		if (checkInOnSameDay) {
 			throw new MaxNumberOfCheckInsError()
