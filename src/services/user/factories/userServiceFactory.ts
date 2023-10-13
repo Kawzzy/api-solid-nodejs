@@ -1,9 +1,9 @@
 import { UserService } from '../userService'
-import { InMemoryUserRepository } from '@/repositories/user/inMemory/inMemoryUserRepository'
+import { PrismaUserRepository } from '@/repositories/user/prisma/prismaUserRepository'
 
 export function UserServiceFactory() {
-	const inMemoryUserRepository = new InMemoryUserRepository()
-	const userService = new UserService(inMemoryUserRepository)
+	const prismaUserRepository = new PrismaUserRepository()
+	const userService = new UserService(prismaUserRepository)
 
 	return userService
 }
