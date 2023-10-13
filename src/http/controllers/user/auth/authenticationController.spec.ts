@@ -1,5 +1,30 @@
-import { test } from 'vitest'
+import request from 'supertest'
 
-test('ok', async () => {
-  
+import { app } from '@/app'
+import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+
+describe('Authentication Controller (e2e)', () => {
+	beforeAll(async () => {
+		await app.ready()
+	})
+
+	afterAll(async () => {
+		await app.close()
+	})
+
+	it('should authenticate user', async () => {
+		await request(app.server).post('/users').send({
+			name: 'User',
+			email: 'userTest@gmail.com',
+			password: '123456'
+		})
+
+		const response = await request(app.server).post('/auth').send({
+			email: 'userTest@gmail.com',
+			password: '123456'
+		})
+
+		expect(response.statusCode).toEqual(200)
+		expect(response.body).toEqual({token: expect.any(String)})
+	})
 })
