@@ -2,7 +2,7 @@ import { gymSchema } from '@/utils/gym/gymUtils'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { FetchNearbyGymServiceFactory } from '@/services/gym/factories/fetchNearbyGymServiceFactory'
 
-export async function FetchNearbyGymController(req: FastifyRequest, res: FastifyReply) {
+export async function fetchNearbyGymController(req: FastifyRequest, res: FastifyReply) {
 	const { latitude, longitude } = gymSchema
 		.omit({ name: true, description: true, phone: true })
 		.parse(req.body)
