@@ -14,5 +14,5 @@ export async function fetchNearbyGymController(req: FastifyRequest, res: Fastify
 		userLongitude: longitude
 	})
 
-	return res.status(201).send({ gyms })
+	return res.status(200).send({ gyms })
 }

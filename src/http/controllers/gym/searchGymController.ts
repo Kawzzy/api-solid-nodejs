@@ -12,5 +12,5 @@ export async function searchGymController(req: FastifyRequest, res: FastifyReply
 		page
 	})
 
-	return res.status(201).send({ gyms })
+	return res.status(200).send({ gyms })
 }

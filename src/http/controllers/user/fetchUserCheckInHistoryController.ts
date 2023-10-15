@@ -12,5 +12,5 @@ export async function fetchUserCheckInHistoryController(req: FastifyRequest, res
 		page
 	})
 
-	return res.status(201).send({ checkIns })
+	return res.status(200).send({ checkIns })
 }
