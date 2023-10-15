@@ -5,6 +5,10 @@ interface Coordinate {
   longitude: number
 }
 
+export const checkInFetchUserHistorySchema = z.object({
+	page: z.coerce.number().min(1).default(1)
+})
+
 export const checkInCreateParamsSchema = z.object({
 	gymId: z.string().uuid()
 })
