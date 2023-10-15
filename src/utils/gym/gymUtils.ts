@@ -11,3 +11,8 @@ export const gymSchema = z.object({
 		return Math.abs(value) <= 180
 	}),
 })
+
+export const gymQueryParamsSchema = z.object({
+	query: z.string(),
+	page: z.coerce.number().min(1).default(1)
+})
