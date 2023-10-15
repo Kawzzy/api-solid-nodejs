@@ -5,6 +5,10 @@ interface Coordinate {
   longitude: number
 }
 
+export const checkInValidateParamsSchema = z.object({
+	checkInId: z.string().uuid()
+})
+
 export const checkInFetchUserHistorySchema = z.object({
 	page: z.coerce.number().min(1).default(1)
 })
