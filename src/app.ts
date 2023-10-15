@@ -7,6 +7,7 @@ import { gymRoutes } from './http/routes/gym/gymRoutes'
 import { userRoutes } from './http/routes/user/userRoutes'
 import { profileRoutes } from './http/routes/user/profileRoutes'
 import { authenticationRoute } from './http/routes/user/auth/authenticationRoute'
+import { checkInRoutes } from './http/routes/user/checkInRoutes'
 
 export const app = fastify()
 
@@ -25,6 +26,7 @@ app.register(gymRoutes, {
 app.register(profileRoutes, {
 	prefix: 'me'
 })
+app.register(checkInRoutes)
 
 app.setErrorHandler((error, req, res) => {
 	if (error instanceof ZodError) {

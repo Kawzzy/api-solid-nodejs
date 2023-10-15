@@ -1,7 +1,22 @@
+import { z } from 'zod'
+
 interface Coordinate {
   latitude: number,
   longitude: number
 }
+
+export const checkInCreateParamsSchema = z.object({
+	gymId: z.string().uuid()
+})
+
+export const checkInSchema = z.object({
+	latitude: z.number().refine(value => {
+		return Math.abs(value) <= 90
+	}),
+	longitude: z.number().refine(value => {
+		return Math.abs(value) <= 180
+	})
+})
 
 /**
  * Return the distance in km between user and gym
