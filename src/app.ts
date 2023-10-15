@@ -3,6 +3,7 @@ import fastify from 'fastify'
 import { env } from './env'
 import { ZodError } from 'zod'
 import { fastifyJwt } from '@fastify/jwt'
+import { gymRoutes } from './http/routes/gym/gymRoutes'
 import { userRoutes } from './http/routes/user/userRoutes'
 import { profileRoutes } from './http/routes/user/profileRoutes'
 import { authenticationRoute } from './http/routes/user/auth/authenticationRoute'
@@ -17,6 +18,9 @@ app.register(userRoutes, {
 })
 app.register(authenticationRoute, {
 	prefix: 'auth'
+})
+app.register(gymRoutes, {
+	prefix: 'gyms'
 })
 app.register(profileRoutes, {
 	prefix: 'me'
