@@ -9,7 +9,7 @@ export const gymSchema = z.object({
 	}),
 	longitude: z.number().refine(value => {
 		return Math.abs(value) <= 180
-	}),
+	})
 })
 
 export const gymQueryParamsSchema = z.object({
