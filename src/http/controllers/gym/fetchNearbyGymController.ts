@@ -9,7 +9,7 @@ export async function fetchNearbyGymController(req: FastifyRequest, res: Fastify
 
 	const fetchNearbyGymServiceFactory = FetchNearbyGymServiceFactory()
 		
-	const gyms = await fetchNearbyGymServiceFactory.execute({
+	const { gyms } = await fetchNearbyGymServiceFactory.execute({
 		userLatitude: latitude,
 		userLongitude: longitude
 	})

@@ -7,7 +7,7 @@ export async function searchGymController(req: FastifyRequest, res: FastifyReply
 
 	const searchGymService = SearchGymServiceFactory()
 		
-	const gyms = await searchGymService.execute({
+	const { gyms } = await searchGymService.execute({
 		query,
 		page
 	})
