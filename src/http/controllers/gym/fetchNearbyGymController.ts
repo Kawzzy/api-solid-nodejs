@@ -5,7 +5,7 @@ import { FetchNearbyGymServiceFactory } from '@/services/gym/factories/fetchNear
 export async function fetchNearbyGymController(req: FastifyRequest, res: FastifyReply) {
 	const { latitude, longitude } = gymSchema
 		.omit({ name: true, description: true, phone: true })
-		.parse(req.body)
+		.parse(req.query)
 
 	const fetchNearbyGymServiceFactory = FetchNearbyGymServiceFactory()
 		
