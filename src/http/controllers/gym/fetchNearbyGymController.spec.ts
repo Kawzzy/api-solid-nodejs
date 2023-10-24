@@ -48,9 +48,6 @@ describe('Fetch nearby gym Controller (e2e)', () => {
 			.set('Authorization', `Bearer ${token}`)
 			.send()
 
-		console.log('AAAAAAAAAAAAAAAAAAA')
-		console.log(response.body.data)
-
 		expect(response.statusCode).toEqual(200)
 		expect(response.body.gyms).toHaveLength(1)
 		expect(response.body.gyms).toEqual([
