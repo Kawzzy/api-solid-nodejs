@@ -5,9 +5,9 @@ import { ZodError } from 'zod'
 import { fastifyJwt } from '@fastify/jwt'
 import { gymRoutes } from './http/routes/gym/gymRoutes'
 import { userRoutes } from './http/routes/user/userRoutes'
+import { checkInRoutes } from './http/routes/user/checkInRoutes'
 import { profileRoutes } from './http/routes/user/profileRoutes'
 import { authenticationRoute } from './http/routes/user/auth/authenticationRoute'
-import { checkInRoutes } from './http/routes/user/checkInRoutes'
 
 export const app = fastify()
 

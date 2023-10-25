@@ -3,7 +3,7 @@ import { checkInFetchUserHistorySchema } from '@/utils/user/checkInUtils'
 import { FetchUserCheckInHistoryServiceFactory } from '@/services/user/factories/fetchUserCheckInHistoryServiceFactory'
 
 export async function fetchUserCheckInHistoryController(req: FastifyRequest, res: FastifyReply) {
-	const { page } = checkInFetchUserHistorySchema.parse(req.body)
+	const { page } = checkInFetchUserHistorySchema.parse(req.query)
 
 	const fetchUserCheckInHistoryServiceFactory = FetchUserCheckInHistoryServiceFactory()
 		
