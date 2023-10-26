@@ -17,7 +17,7 @@ export class PrismaCheckInRepository implements ICheckInRepository {
 	async save(data: CheckIn) {
 		const checkIn = await prisma.checkIn.update({
 			where: {
-				id: data.userId
+				id: data.id
 			},
 			data
 		})
