@@ -15,6 +15,7 @@ model User {
   name         String
   email        String   @unique
   passwordHash String
+  role         Role     @default(MEMBER)
   createdAt    DateTime @default(now())
 
   CheckIn CheckIn[]
@@ -41,4 +42,9 @@ model Gym {
   longitude   Decimal
 
   CheckIn CheckIn[]
+}
+
+enum Role {
+  ADMIN
+  MEMBER
 }
